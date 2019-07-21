@@ -1,0 +1,29 @@
+{
+  "short_name": "CIC",
+  "name": "Crop Insurance Calculator",
+  "icons": [
+    {
+      "src": "/PikvimaCalculator/assets/img/144x144.png",
+      "sizes": "144x144",
+      "type": "image/png"
+    },
+    {
+      "src": "/PikvimaCalculator/assets/img/192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/PikvimaCalculator/assets/img/512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    },
+    {
+      "src": "/PikvimaCalculator/assets/img/logo-square.png",
+      "type": "image/png"
+    }
+  ],
+  "start_url": "/?utm_source=pwa",
+  "background_color": "#005b05",
+  "display": "standalone",
+  "theme_color": "#005b05"
+}

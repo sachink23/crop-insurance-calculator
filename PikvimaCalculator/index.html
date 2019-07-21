@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en-US">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crop Insurance Calculator By Kekarjawalekar Technologies</title>
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+    <meta name="description" content="This is a simple calculator developed by Kekarjawalekar Technologies for calculating the crop insurance for specific crop">
+    <meta property="og:image" content="/PikvimaCalculator/assets/img/logo-square.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/styles.css">
+    <script type="text/javascript" src="assets/js/script.js"></script>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-117662376-2"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script type="text/javascript">
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', function() {
+        navigator.serviceWorker.register('/service-worker.js').then(function(registration) {
+          // Registration was successful
+          console.log('ServiceWorker registration successful with scope: ', registration.scope);
+        }, function(err) {
+            // registration failed :(
+            console.log('ServiceWorker registration failed: ', err);
+          });
+        });
+      }
+    </script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-117662376-2');
+    </script>
+<link rel="manifest" href="/manifest.json" />
+
+    <style>
+        .star {
+            font-size: 25px;
+        }
+    </style>
+</head>
+<body>
+
+    <div style="padding:15px" class="website-title ">
+        <h2 style="text-align:center;">Crop Insurance Calculator</h2>
+          <hr/>
+    </div>
+
+    <div>
+        <marquee>शेवटच्या तारखेची वाट न पाहता, आजच आपला पीकविमा भरा. अधिक माहितीसाठी संपर्क साधा - आपले सरकार सेवा केंद्र, बसस्टॅाप, केकरजवळा - 9822810227</marquee>
+    </div>
+    <div>
+          <marquee>हे Calculator फक्त परभणी जिल्ह्यातील शेतकर्यांसाठी आहे</marquee>
+    </div>
+    <div  style="background: lightblue; padding:15px;">
+        <form action="javascript:void(0);" id="calculator" onsubmit="return submit_form()">
+
+            <div class="form-row">
+                <div class="col-sm-3">
+                    <div class="form-group"><label>Crop Name</label>
+                    	<select id="crop_name" class="form-control" required="" onchange="calculate_vima()">
+                        <option value="" selected>Select Crop</option>
+                        <option value="Black Gram (Urad)">Black Gram (Urad)</option>
+                        <option value="Cotton (Kapas)">Cotton (Kapas)</option>
+                        <option value="Green Gram (Moong)">Green Gram (Moong)</option>
+                        <option value="Paddy (Dhan)">Paddy (Dhan)</option>
+                        <option value="Pearl Millet (Bajra)">Pearl Millet (Bajra)</option>
+                        <option value="Pigeon Pea (Red Gram/Arhar/Tur)">Pigeon Pea (Red Gram/Arhar/Tur)</option>
+                        <option value="Sorghum (Jowar/Great Millet)">Sorghum (Jowar/Great Millet)</option>
+                        <option value="Soybean (Bhat)">Soybean (Bhat)</option>
+                        <option value="Sunflower (Suryamukhi)">Sunflower (Suryamukhi)</option>
+                    	</select>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="form-group"><label>Area <span id="unit">(Hectors)</span>
+                    	<select id="area_unit" onchange="change_unit(this.value)">
+                    		<option value="h">Hector</option>
+                    		<option value="r">R</option>
+                    	</select>
+                    </label><input placeholder="Area" onkeyup="calculate_vima()" id="area" class="form-control" type="text" required="">
+                	</div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="form-group"><label>Premium</label><input id="premium" class="form-control" type="text" readonly=""></div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="form-group"><label>Insured Amount</label><input id="insured_amount" class="form-control" type="text" readonly=""></div>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="col-sm-3"></div>
+                <div class="col-sm-3"></div>
+                <div class="col-sm-3"></div>
+                <div class="col-sm-3">
+                    <div class="form-group"><input style="float: left" class="btn btn-danger" value="Reset Everything" onclick="reset_form()" id="reset_btn" type="reset"><button id="submit_btn" style="float: right;" class="btn btn-primary" type="submit" >Add Crop</button></div>
+                </div>
+            </div>
+            </form>
+            <div class="form-row">
+                <div class="col-sm-3">
+                    <input type="checkbox" onclick="showAdditionalDetails()" id="vle-only-check"><label id="note-vle-only"><b> &nbsp;&nbsp;&nbsp;For VLE (Print farmer details)</b></label>
+                </div>
+            </div>
+
+            <div class="form-row" id="vle-extra-det" style="display:none">
+                <div class="col-sm-3">
+                    <div class="form-group"><label>Farmer Name </label>
+                      <input id="farm_name" onkeyup="FarmerExtDet()" onchange="FarmerExtDet()" class="form-control" placeholder="Farmer Name">
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="form-group"><label>Village </label>
+                      <input id="farm_vil" onkeyup="FarmerExtDet()" onchange="FarmerExtDet()" class="form-control" placeholder="Farmer Village">
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="form-group"><label>Amount Paid </label>
+                      <input id="farm_amt_paid" onkeyup="FarmerExtDet()" onchange="FarmerExtDet()" class="form-control" placeholder="Amount Paid">
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="form-group"><label>Amount Pending </label>
+                      <input id="farm_amt_pend" readonly onkeyup="FarmerExtDet()" onchange="FarmerExtDet()" class="form-control" placeholder="Amount Pending">
+                    </div>
+                </div>
+            </div>
+        <br/>
+    </div>
+    <div>
+        <hr>
+    </div>
+    <div style="padding:15px">
+      <div class="row">
+      <div class="col-sm-12 col-6">
+      <div><p class="text-primary">Rate Us</p></div>
+      <div id="wpac-rating"></div>
+      <script type="text/javascript">
+      wpac_init = window.wpac_init || [];
+      wpac_init.push({widget: 'Rating', id: 19162});
+      (function() {
+          if ('WIDGETPACK_LOADED' in window) return;
+          WIDGETPACK_LOADED = true;
+          var mc = document.createElement('script');
+          mc.type = 'text/javascript';
+          mc.async = true;
+          mc.src = 'https://embed.widgetpack.com/widget.js';
+          var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(mc, s.nextSibling);
+      })();
+      </script>
+      </div>
+      <div class="col-sm-12 col-6">
+            <button style="margin-bottom: 10px; float: right;" class="btn btn-info" onclick="print(); document.getElementById('print_area_add').style.display=''"><i class="fa fa-print"></i>&nbsp;&nbsp;Print</button>
+          </div></div>
+            <div id="section-to-print1">
+                <div id="vle-print" style="display:none" style="padding:15px">
+                    <table border='1' align="center" width="100%">
+                        <tr style="padding:5px">
+                            <th>Farmer Name</th>
+                            <td colspan="5" id="farmer-name-print" style="text-align:left; padding:5px"></td>
+                        </tr>
+                        <tr style="padding:5px">
+                            <th>Village</th>
+                            <td id="village-print" style="text-align:left; padding:5px"></td>
+                            <th>Amount Paid</th>
+                            <td id="amount-paid-print"></td>
+                            <th>Amount Pending</th>
+                            <td id="amount-pending-print"></td>
+                        </tr>
+                    </table>
+                </div>
+                <br>
+                <br>
+                <table id="" align="center" width="100%" border="1">
+                    <thead>
+                        <tr>
+                            <th>Crop Name</th>
+                            <th>Area (Hectors)</th>
+                            <th>Premium</th>
+                            <th>Insured Amount</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr id="row1" style="display: none">
+                            <td id="crop1"></td>
+                            <td id="area1"></td>
+                            <td id="premium1"></td>
+                            <td id="insured1"></td>
+                            <td class="remove_btn" onclick="remove_crop(1)">&times;</td>
+                        </tr>
+                        <tr id="row2" style="display: none">
+                            <td id="crop2"></td>
+                            <td id="area2"></td>
+                            <td id="premium2"></td>
+                            <td id="insured2"></td>
+                            <td class="remove_btn" onclick="remove_crop(2)">&times;</td>
+                        </tr>
+                        <tr id="row3" style="display: none">
+                            <td id="crop3"></td>
+                            <td id="area3"></td>
+                            <td id="premium3"></td>
+                            <td id="insured3"></td>
+                            <td class="remove_btn" onclick="remove_crop(3)">&times;</td>
+                        </tr>
+                        <tr id="row4" style="display: none">
+                            <td id="crop4"></td>
+                            <td id="area4"></td>
+                            <td id="premium4"></td>
+                            <td id="insured4"></td>
+                            <td class="remove_btn" onclick="remove_crop(4)">&times;</td>
+                        </tr>
+                        <tr id="row5" style="display: none">
+                            <td id="crop5"></td>
+                            <td id="area5"></td>
+                            <td id="premium5"></td>
+                            <td id="insured5"></td>
+                            <td class="remove_btn" onclick="remove_crop(5)">&times;</td>
+                        </tr>
+                        <tr id="row6" style="display: none">
+                            <td id="crop6"></td>
+                            <td id="area6"></td>
+                            <td id="premium6"></td>
+                            <td id="insured6"></td>
+                            <td class="remove_btn" onclick="remove_crop(6)">&times;</td>
+                        </tr>
+                        <tr id="row7" style="display: none">
+                            <td id="crop7"></td>
+                            <td id="area7"></td>
+                            <td id="premium7"></td>
+                            <td id="insured7"></td>
+                            <td class="remove_btn" onclick="remove_crop(7)">&times;</td>
+                        </tr>
+                        <tr id="row8" style="display: none">
+                            <td id="crop8"></td>
+                            <td id="area8"></td>
+                            <td id="premium8"></td>
+                            <td id="insured8"></td>
+                            <td class="remove_btn" onclick="remove_crop(8)">&times;</td>
+                        </tr>
+                        <tr id="row9" style="display: none">
+                            <td id="crop9"></td>
+                            <td id="area9"></td>
+                            <td id="premium9"></td>
+                            <td id="insured9"></td>
+                            <td class="remove_btn" onclick="remove_crop(9)">&times;</td>
+                        </tr>
+                        <tr id="row10" style="display: none">
+                            <td id="crop10"></td>
+                            <td id="area10"></td>
+                            <td id="premium10"></td>
+                            <td id="insured10"></td>
+                            <td class="remove_btn" onclick="remove_crop(10)">&times;</td>
+                        </tr>
+
+                        <tr style="border-bottom: 1px solid black;">
+                            <td class="total_column">Total</td>
+                            <td class="total_column" id="total_area">0</td>
+                            <td class="total_column" id="total_premium">0</td>
+                            <td class="total_column" id="total_insured">0</td>
+                            <td></td>
+                        </tr>
+                    </tbody>
+
+                </table>
+            </div>
+
+    </div>
+
+    <div class="container">
+        <hr>
+    </div>
+
+    <div class="container">
+        <div class="form-row">
+            <div class="col-sm-3 "><div onclick="" id="google_translate_element"></div></div>
+            <div class="col-sm-3"><p>Please Check, <a href="tnc.html">Terms and Conditions</a> before using this calculator.</div>
+            <div class="col-sm-3"><p>This website is developed and maintained by Kekarjawalekar Technologies</p></div>
+            <div class="col-sm-3"><img height="50px" src="assets/img/logo-rect.png"></div>
+        </div>
+
+    </div>
+    <script type="text/javascript">
+    function googleTranslateElementInit() {
+      new google.translate.TranslateElement({pageLanguage: 'en'}, 'google_translate_element');
+    }
+    </script>
+
+    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/js/bootstrap.bundle.min.js"></script>
+    <div class="container" id="print_area_add" >
+          <br/>
+          <p>The premium is calculated on https://old-cic.kportal.in/PikvimaCalculator for free. :)</p>
+          <br />
+    </div>
+
+</body>
+
+</html>

@@ -1,0 +1,74 @@
+body {
+			size: cover;
+}
+.website-title {
+	background-image: url("/PikvimaCalculator/assets/img/title-back.png");
+	color : white;
+	-webkit-text-stroke: 1px red;
+}
+
+marquee {
+	color : #f70ce3;;
+}
+table {
+	overflow: scroll;
+}
+label {
+		color: #fc0a0a;
+		font-size: 16px;
+		font-weight: bolder;
+}
+thead	 {
+	text-align: center;
+	padding: 5px 5px 5px 5px;
+	background: gray;
+	color : white;
+
+}
+td, th {
+	text-align: center;
+	padding: 5px 5px 5px 5px;
+	border : 1px solid black;
+
+}
+td {
+	background: white;
+}
+.total_column {
+		background: white;
+		font-weight: bolder;
+}
+.remove_btn {
+	font-size: 20px;
+	color : red;
+	font-weight: bold;
+	cursor: pointer;
+}
+.border {
+
+}
+@media print {
+  body * {
+    visibility: hidden;
+  }
+  #section-to-print1, #section-to-print1 * {
+    visibility: visible;
+  }
+  #section-to-print1 {
+    position: absolute;
+    left: 0;
+    top: 10px;
+  }
+	#print_area_add, #print_area_add * {
+		visibility: visible;
+	}
+}
+@media only screen and (min-width: 600px) {
+   	#reset_btn {
+   		float : right !important;
+
+   	}
+   	#submit_btn {
+   		float: left !important;
+   	}
+}
